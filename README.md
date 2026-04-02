@@ -49,5 +49,5 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/your-repo/python-tutor-system.git
+git clone https://github.com/Hxy1899/python-tutor-system.git
 cd python-tutor-system
