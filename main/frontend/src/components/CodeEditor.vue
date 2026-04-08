@@ -2,13 +2,13 @@
   <div class="code-editor-container" :class="{ 'has-errors': hasErrors }">
     <div class="editor-header">
       <div class="header-left">
-        <span class="editor-title">Python ±à¼­Æ÷</span>
+        <span class="editor-title">Python ç¼–è¾‘å™¨</span>
         <div class="status-indicator" :class="statusClass"></div>
       </div>
       <div class="header-right">
         <button class="btn-primary" @click="handleSubmit" :disabled="isSubmitting">
-          <span v-if="isSubmitting">Ìá½»ÖĞ...</span>
-          <span v-else>Ìá½»Õï¶Ï</span>
+          <span v-if="isSubmitting">æäº¤ä¸­...</span>
+          <span v-else>æäº¤è¯Šæ–­</span>
         </button>
       </div>
     </div>
@@ -155,5 +155,6 @@ watch(() => props.errors, (newErrors) => {
 
 :deep(.cm-editor) {
   height: 100%;
+  font-family: var(--font-mono);
 }
 </style>

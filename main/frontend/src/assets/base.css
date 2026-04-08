@@ -12,10 +12,10 @@
   --color-success: #4A7A4B;
 
   /* Typography */
-  --font-display: 'Lora', serif;
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Lora', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Lora', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-heading: 'Poppins', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Heiti SC', 'SimHei', sans-serif;
+  --font-body: 'Lora', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-mono: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'SimSun', monospace;
 
   /* Spacing */
   --space-1: 4px;

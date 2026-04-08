@@ -5,7 +5,7 @@ class CodePreprocessor:
     def preprocess(code: str) -> str:
         """
         1. Remove comments (#)
-        2. Remove docstrings (''' ... ''' or """ ... """)
+        2. Remove docstrings (''' ... ''' or \"\"\" ... \"\"\")
         3. Standardize indent (not implemented here, but can be)
         4. Trim leading/trailing whitespace
         """

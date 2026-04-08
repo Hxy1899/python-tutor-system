@@ -4,7 +4,7 @@
       <div class="header-content container">
         <h1 class="logo">Python Tutor System</h1>
         <div class="user-info">
-          <span class="username">ÄãºÃ£¬Ñ§Éú</span>
+          <span class="username">ä½ å¥½ï¼Œå­¦ç”Ÿ</span>
         </div>
       </div>
     </header>
@@ -37,7 +37,7 @@ import axios from 'axios';
 import CodeEditor from '../components/CodeEditor.vue';
 import HintPanel from '../components/HintPanel.vue';
 
-const code = ref('# ÔÚ´ËÊäÈëÄãµÄ Python ´úÂë\n\ndef main():\n    print("Hello, Python!")\n\nif __name__ == "__main__":\n    main()');
+const code = ref('# åœ¨æ­¤è¾“å…¥ä½ çš„ Python ä»£ç \n\ndef main():\n    print("Hello, Python!")\n\nif __name__ == "__main__":\n    main()');
 const isSubmitting = ref(false);
 const staticIssues = ref([]);
 const diagnosisResult = reactive({
@@ -69,7 +69,7 @@ const submitCode = async () => {
   } catch (error) {
     console.error("Submission error:", error);
     diagnosisResult.error_type = "ConnectionError";
-    diagnosisResult.hint = "ÎŞ·¨Á¬½Óµ½ºó¶ËÕï¶Ï·şÎñÆ÷£¬ÇëÉÔºóÖØÊÔ¡£";
+    diagnosisResult.hint = "æ— æ³•è¿æ¥åˆ°åç«¯è¯Šæ–­æœåŠ¡å™¨ï¼Œè¯·ç¨åé‡è¯•ã€‚";
     diagnosisResult.is_correct = false;
   } finally {
     isSubmitting.value = false;
