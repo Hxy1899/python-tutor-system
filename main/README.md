@@ -1,7 +1,7 @@
 # Python Tutor System —— 智能化编程作业纠错与提示工具
 
 > **版本**: 1.1.0  
-> **更新日期**: 2026-04-09 
+> **更新日期**: 2026-04-08
 > **项目定位**: 面向中小学 Python 编程教学，提供智能错误诊断 + 引导式提示 + 在线编辑器的完整解决方案。
 
 ---
@@ -54,19 +54,24 @@ main/
 # 1. 进入项目根目录
 cd main
 
-# 2. 启动所有服务
+# 2. 启动所有服务 (MySQL, Redis, Backend, Frontend)
 docker-compose up --build -d
 
-# 3. 查看容器状态
+# 3. 初始化数据库 (首次运行必须执行)
+docker exec main-backend-1 python scripts/init_db.py
+
+# 4. 查看运行状态
 docker-compose ps
 ```
 
-### 2.3 初始化设置
-- **数据库**: 系统启动后会自动在 MySQL 容器中创建 `tutor_db`。
-- **端口映射**:
-  - 前端: [http://localhost:80](http://localhost:80)
+### 2.3 初始化设置与访问
+- **系统端口**:
+  - 前端界面: [http://localhost:80](http://localhost:80)
   - 后端 API: [http://localhost:8000](http://localhost:8000)
   - API 文档 (Swagger): [http://localhost:8000/docs](http://localhost:8000/docs)
+- **初始账号**:
+  - 管理员 (教师): `admin` / `admin123`
+  - 示例作业: 已在 `init_db.py` 中预置
 
 ---
 

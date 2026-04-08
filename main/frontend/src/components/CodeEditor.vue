@@ -2,14 +2,8 @@
   <div class="code-editor-container" :class="{ 'has-errors': hasErrors }">
     <div class="editor-header">
       <div class="header-left">
-        <span class="editor-title">Python 编辑器</span>
+        <span class="editor-title">Python ?</span>
         <div class="status-indicator" :class="statusClass"></div>
-      </div>
-      <div class="header-right">
-        <button class="btn-primary" @click="handleSubmit" :disabled="isSubmitting">
-          <span v-if="isSubmitting">提交中...</span>
-          <span v-else>提交诊断</span>
-        </button>
       </div>
     </div>
     <div class="editor-body" ref="editorRef"></div>
@@ -31,7 +25,7 @@ const props = defineProps({
   errors: { type: Array, default: () => [] }
 });
 
-const emit = defineEmits(['update:modelValue', 'submit']);
+const emit = defineEmits(['update:modelValue']);
 
 const editorRef = ref(null);
 let view = null;
@@ -84,10 +78,6 @@ const getPos = (line, col) => {
   } catch {
     return 0;
   }
-};
-
-const handleSubmit = () => {
-  emit('submit');
 };
 
 watch(() => props.modelValue, (newVal) => {

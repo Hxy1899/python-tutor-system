@@ -43,33 +43,36 @@ pip install -r requirements.txt
 
 ### 2.3 配置环境变量
 在 `app/config.py` 中可以调整以下配置，或通过 `.env` 文件覆盖：
-- `DATABASE_URL`: 数据库连接字符串（MySQL）。
-- `REDIS_URL`: Redis 连接字符串。
-- `MODEL_PATH`: 机器学习模型文件路径。
-- `SECRET_KEY`: JWT 签名密钥。
+- `DATABASE_URL`: `mysql+mysqlconnector://root:root@localhost:3306/tutor_db` (本地开发)
+- `REDIS_URL`: `redis://localhost:6379` (本地开发)
+- `MODEL_PATH`: 模型文件路径 (默认已通过 Docker 卷挂载)
 
 ---
 
 ## 3. 运行命令
 
-### 3.1 数据库初始化
-首次运行前或模型变更后，请执行：
+### 3.1 数据库初始化 (首次运行必做)
 ```bash
-# 本地运行
+# 本地开发模式
 python scripts/init_db.py
-# Docker 运行
+
+# Docker 模式 (在项目根目录执行)
 docker exec main-backend-1 python scripts/init_db.py
 ```
 
-### 3.2 开发模式运行
+### 3.2 本地开发模式
 ```bash
-# 自动重载代码
+# 安装依赖
+pip install -r requirements.txt
+
+# 启动后端 (默认端口 8000)
 uvicorn app.main:app --reload --port 8000
 ```
 
-### 3.3 生产模式运行 (Docker)
+### 3.3 生产/容器模式 (推荐)
+请在项目根目录 `main/` 下使用 `docker-compose`：
 ```bash
-cd ..
+# 启动后端及相关服务 (MySQL, Redis)
 docker-compose up -d backend
 ```
 

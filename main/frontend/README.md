@@ -38,15 +38,20 @@ npm install
 
 ## 3. 运行命令
 
-### 3.1 本地开发模式
+### 3.1 本地开发模式 (推荐)
 ```bash
-# 启动本地开发服务器，默认端口 3000
+# 安装依赖
+npm install
+
+# 启动开发服务器 (默认端口 3000)
+# 此模式支持代码热重载，并通过代理连接到后端 (localhost:8000)
 npm run dev
 ```
 
-### 3.2 生产环境构建 (Docker)
+### 3.2 生产环境/容器模式
+请在项目根目录 `main/` 下使用 `docker-compose`：
 ```bash
-cd ..
+# 启动前端 (默认映射到主机的 80 端口)
 docker-compose up -d frontend
 ```
 
@@ -55,10 +60,9 @@ docker-compose up -d frontend
 ## 4. 测试与验证
 
 ### 4.1 访问与联调
-1. 确保后端 API (`http://localhost:8000`) 已启动。
-2. 运行 `npm run dev` 并访问 [http://localhost:3000](http://localhost:3000)。
-3. 使用 `admin / admin123` 登录教师端。
-4. 注册新学生账号并提交代码，验证流程是否闭环。
+1. **本地开发**: 访问 [http://localhost:3000](http://localhost:3000)。
+2. **容器模式**: 访问 [http://localhost:80](http://localhost:80)。
+3. **接口配置**: 开发模式下，API 请求会通过 `vite.config.js` 的 `proxy` 转发至 `localhost:8000`。
 
 ---
 
