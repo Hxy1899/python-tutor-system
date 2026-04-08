@@ -10,7 +10,7 @@
     </div>
     
     <div v-else-if="isCorrect" class="success-state">
-      <div class="success-icon">?</div>
+      <div class="success-icon">{{ randomIcon }}</div>
       <p class="success-msg">太棒了！你的代码运行正确，没有发现错误。</p>
     </div>
     
@@ -52,6 +52,11 @@ const hintHtml = computed(() => {
     }
     return `<p>${line}</p>`;
   }).join('');
+});
+
+const randomIcon = computed(() => {
+  const emojis = ['🎉', '🥳', '✨', '🏆', '👍'];
+  return emojis[Math.floor(Math.random() * emojis.length)];
 });
 </script>
 
@@ -139,7 +144,7 @@ const hintHtml = computed(() => {
 }
 
 .hint-text :deep(li)::before {
-  content: "?";
+  content: "•";
   position: absolute;
   left: 0;
   color: var(--color-accent-orange);
