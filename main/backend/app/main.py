@@ -19,11 +19,10 @@ app.add_middleware(
 
 # Include Routers
 app.include_router(code.router, prefix=f"{settings.API_V1_STR}/code", tags=["Code Management"])
-# If/when the following modules are implemented, uncomment their routers:
-# from app.api.v1 import assignment, auth, stats
-# app.include_router(assignment.router, prefix=f"{settings.API_V1_STR}/assignments", tags=["Assignments"])
-# app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["Auth"])
-# app.include_router(stats.router, prefix=f"{settings.API_V1_STR}/stats", tags=["Stats"])
+from app.api.v1 import assignment, auth, stats
+app.include_router(assignment.router, prefix=f"{settings.API_V1_STR}/assignments", tags=["Assignments"])
+app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["Auth"])
+app.include_router(stats.router, prefix=f"{settings.API_V1_STR}/stats", tags=["Stats"])
 
 @app.get("/")
 def read_root():

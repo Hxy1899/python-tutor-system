@@ -1,0 +1,83 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-8.0.0, pluggy-1.6.0
+rootdir: /app
+plugins: anyio-4.13.0
+collected 8 items
+
+tests/test_assignment.py ...                                             [ 37%]
+tests/test_auth.py ...                                                   [ 75%]
+tests/test_code.py .F                                                    [100%]
+
+=================================== FAILURES ===================================
+________________________ test_submit_code_syntax_error _________________________
+
+client = <starlette.testclient.TestClient object at 0x7ba650165b10>
+
+    def test_submit_code_syntax_error(client):
+        # Setup: Create student and assignment
+        res_u = client.post("/api/v1/auth/register", json={"username": "s2", "password": "p2", "name": "S2", "role": "student"})
+        user_id = res_u.json()["id"]
+        res_a = client.post("/api/v1/assignments/", json={"title": "T2", "description": "D2", "test_code": ""})
+        assignment_id = res_a.json()["id"]
+    
+        # Submit code with syntax error
+        response = client.post(
+            "/api/v1/code/submit",
+            json={
+                "user_id": user_id,
+                "assignment_id": assignment_id,
+                "code": "print('hello' + )", # Syntax error
+                "test_code": ""
+            },
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["is_correct"] == False
+>       assert data["error_type"] == "SyntaxError"
+E       AssertionError: assert 'R09: ZeroDivisionError' == 'SyntaxError'
+E         
+E         - SyntaxError
+E         + R09: ZeroDivisionError
+
+tests/test_code.py:43: AssertionError
+=============================== warnings summary ===============================
+../usr/local/lib/python3.10/site-packages/pydantic/_internal/_config.py:272
+../usr/local/lib/python3.10/site-packages/pydantic/_internal/_config.py:272
+../usr/local/lib/python3.10/site-packages/pydantic/_internal/_config.py:272
+  /usr/local/lib/python3.10/site-packages/pydantic/_internal/_config.py:272: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.6/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+tests/test_code.py::test_submit_code_correct
+tests/test_code.py::test_submit_code_syntax_error
+  /usr/local/lib/python3.10/site-packages/sklearn/base.py:376: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeClassifier from version 1.4.1.post1 when using version 1.4.0. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_code.py::test_submit_code_correct
+tests/test_code.py::test_submit_code_syntax_error
+  /usr/local/lib/python3.10/site-packages/sklearn/base.py:376: InconsistentVersionWarning: Trying to unpickle estimator RandomForestClassifier from version 1.4.1.post1 when using version 1.4.0. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_code.py::test_submit_code_correct
+tests/test_code.py::test_submit_code_syntax_error
+  /usr/local/lib/python3.10/site-packages/sklearn/base.py:376: InconsistentVersionWarning: Trying to unpickle estimator LabelEncoder from version 1.4.1.post1 when using version 1.4.0. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_code.py::test_submit_code_correct
+tests/test_code.py::test_submit_code_syntax_error
+  /usr/local/lib/python3.10/site-packages/sklearn/base.py:376: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.4.1.post1 when using version 1.4.0. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_code.py::test_submit_code_correct
+tests/test_code.py::test_submit_code_syntax_error
+  /usr/local/lib/python3.10/site-packages/sklearn/base.py:376: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.4.1.post1 when using version 1.4.0. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_code.py::test_submit_code_syntax_error - AssertionError: as...
+=================== 1 failed, 7 passed, 13 warnings in 7.41s ===================

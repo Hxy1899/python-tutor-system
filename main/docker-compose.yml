@@ -26,13 +26,14 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ./ml:/ml
       - /var/run/docker.sock:/var/run/docker.sock # For sandbox docker calls
     environment:
       - DATABASE_URL=mysql+mysqlconnector://root:root@mysql/tutor_db
       - REDIS_URL=redis://redis:6379
-      - MODEL_PATH=/app/ml/models/classifier.pkl
-      - LE_PATH=/app/ml/models/le.pkl
-      - TFIDF_PATH=/app/ml/models/tfidf.pkl
+      - MODEL_PATH=/ml/models/classifier.pkl
+      - LE_PATH=/ml/models/le.pkl
+      - TFIDF_PATH=/ml/models/tfidf.pkl
     depends_on:
       - mysql
       - redis

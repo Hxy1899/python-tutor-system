@@ -1,7 +1,7 @@
 # Python Tutor System - 后端服务指南
 
-> **版本**: 1.0.0  
-> **更新日期**: 2026-04-02  
+> **版本**: 1.1.0  
+> **更新日期**: 2026-04-08  
 > **框架**: FastAPI (Python 3.10+)
 
 ---
@@ -15,6 +15,9 @@
 - **沙箱隔离 (Sandbox)**: 在独立的 Docker 容器中安全执行代码，防御恶意脚本。
 - **错误分类 (Error Classifier)**: 基于 TF-IDF 和 AST 特征的机器学习推理。
 - **提示生成 (Hint Generator)**: 根据错误类型生成针对性的引导式反馈。
+- **用户认证 (Auth)**: 基于 JWT 的登录、注册与权限管理。
+- **作业管理 (Assignment)**: 教师发布作业、配置测试用例，学生查看作业。
+- **学情统计 (Stats)**: 自动分析错误分布、学生进度及平均正确率。
 
 ---
 
@@ -40,24 +43,34 @@ pip install -r requirements.txt
 
 ### 2.3 配置环境变量
 在 `app/config.py` 中可以调整以下配置，或通过 `.env` 文件覆盖：
-- `DATABASE_URL`: 数据库连接字符串。
+- `DATABASE_URL`: 数据库连接字符串（MySQL）。
 - `REDIS_URL`: Redis 连接字符串。
 - `MODEL_PATH`: 机器学习模型文件路径。
+- `SECRET_KEY`: JWT 签名密钥。
 
 ---
 
 ## 3. 运行命令
 
-### 3.1 开发模式运行
+### 3.1 数据库初始化
+首次运行前或模型变更后，请执行：
+```bash
+# 本地运行
+python scripts/init_db.py
+# Docker 运行
+docker exec main-backend-1 python scripts/init_db.py
+```
+
+### 3.2 开发模式运行
 ```bash
 # 自动重载代码
 uvicorn app.main:app --reload --port 8000
 ```
 
-### 3.2 生产模式运行 (Docker)
+### 3.3 生产模式运行 (Docker)
 ```bash
-docker build -t tutor-backend .
-docker run -p 8000:8000 tutor-backend
+cd ..
+docker-compose up -d backend
 ```
 
 ---
@@ -73,11 +86,26 @@ pytest tests/
 ### 4.2 接口验证
 访问 Swagger 文档并手动调用接口：
 - 地址: [http://localhost:8000/docs](http://localhost:8000/docs)
-- 接口: `POST /api/v1/code/submit`
+- 接口: `POST /api/v1/auth/login`, `POST /api/v1/code/submit`, `GET /api/v1/stats/overall`
 
 ---
 
-## 5. 常见问题 (FAQ)
+## 5. 运维与日志
+
+### 5.1 日志查看
+```bash
+# 查看实时日志
+docker logs -f main-backend-1
+```
+
+### 5.2 回滚方案
+1. **代码回滚**: `git checkout <commit_id>`
+2. **镜像回滚**: 修改 `docker-compose.yml` 镜像版本并执行 `docker-compose up -d`
+3. **数据库回滚**: 手动恢复最近一次的 SQL 备份。
+
+---
+
+## 6. 常见问题 (FAQ)
 
 **Q: 运行时提示 `Docker not found`？**
 A: 后端沙箱模块依赖 Docker SDK，请确保本地 Docker 服务已启动且当前用户有权限调用。

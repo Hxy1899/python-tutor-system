@@ -1,9 +1,8 @@
 <template>
-  <StudentView />
+  <router-view />
 </template>
 
 <script setup>
-import StudentView from './views/StudentView.vue';
 </script>
 
 <style>

@@ -1,18 +1,21 @@
 # Python Tutor System - 前端应用指南
 
-> **版本**: 1.0.0  
-> **更新日期**: 2026-04-02  
-> **框架**: Vue 3 + Vite + CodeMirror 6 + Pinia
+> **版本**: 1.1.0  
+> **更新日期**: 2026-04-08  
+> **框架**: Vue 3 + Vite + CodeMirror 6 + Pinia + Tailwind CSS
 
 ---
 
 ## 1. 模块功能说明
 
 前端应用提供了直观的编程与学习界面，其核心组件包括：
-- **CodeEditor.vue**: 基于 CodeMirror 6 的高性能 Python 编辑器，具备语法高亮、自动保存、错误高亮定位及代码折叠等特性。
-- **HintPanel.vue**: 智能提示面板，展示由后端诊断生成的引导式修复建议。
-- **StudentView.vue**: 学生端主视图，集成了代码编辑、一键提交及实时诊断反馈。
-- **Auth/User Management**: 用户登录及角色切换功能。
+- **CodeEditor.vue**: 基于 CodeMirror 6 的 Python 编辑器，支持语法高亮、错误定位。
+- **HintPanel.vue**: 智能提示面板，展示引导式修复建议。
+- **StudentView.vue**: 学生端主视图，支持查看作业、编写代码、提交诊断。
+- **TeacherView.vue**: 教师端主视图，集成了学情统计与作业管理。
+- **AssignmentManage.vue**: 教师发布与编辑作业的工具。
+- **StatsReport.vue**: 可视化展示错误分布与学情数据。
+- **Auth (Login/Register)**: 用户登录与注册流程，支持角色区分。
 
 ---
 
@@ -20,7 +23,7 @@
 
 ### 2.1 环境准备
 - 安装 [Node.js 20+](https://nodejs.org/)。
-- 推荐使用 [pnpm](https://pnpm.io/) 或 `npm` 作为包管理器。
+- 推荐使用 [pnpm](https://pnpm.io/) 或 `npm`。
 
 ### 2.2 依赖安装
 在 `frontend/` 目录下执行：
@@ -29,7 +32,7 @@ npm install
 ```
 
 ### 2.3 配置 API 代理
-在 `vite.config.js` 中可以调整后端 API 的代理地址，默认指向 `http://localhost:8000`。
+在 `vite.config.js` 中调整后端 API 代理地址，或通过环境变量 `VITE_API_BASE_URL` 配置。
 
 ---
 
@@ -41,16 +44,10 @@ npm install
 npm run dev
 ```
 
-### 3.2 生产环境构建
+### 3.2 生产环境构建 (Docker)
 ```bash
-# 构建静态资源文件，输出至 dist/ 目录
-npm run build
-```
-
-### 3.3 生产环境预览
-```bash
-# 预览构建后的静态应用
-npm run preview
+cd ..
+docker-compose up -d frontend
 ```
 
 ---
@@ -60,17 +57,32 @@ npm run preview
 ### 4.1 访问与联调
 1. 确保后端 API (`http://localhost:8000`) 已启动。
 2. 运行 `npm run dev` 并访问 [http://localhost:3000](http://localhost:3000)。
-3. 在编辑器中输入一段包含语法错误的代码并点击提交，验证提示面板是否实时更新。
+3. 使用 `admin / admin123` 登录教师端。
+4. 注册新学生账号并提交代码，验证流程是否闭环。
 
 ---
 
-## 5. 常见问题 (FAQ)
+## 5. 运维与日志
+
+### 5.1 日志查看
+```bash
+# 查看 Nginx (Docker) 日志
+docker logs -f main-frontend-1
+```
+
+### 5.2 回滚方案
+1. **代码回滚**: `git checkout <commit_id>`
+2. **重新构建**: `docker-compose build frontend && docker-compose up -d frontend`
+
+---
+
+## 6. 常见问题 (FAQ)
 
 **Q: 为什么编辑器无法加载 Python 语法高亮？**
 A: 请检查 `@codemirror/lang-python` 是否已正确安装。
 
-**Q: 点击提交后一直处于「提交中...」状态？**
-A: 请检查后端 API 是否响应超时，或网络代理配置是否正确。
+**Q: 刷新页面后登录状态丢失？**
+A: 请检查浏览器 LocalStorage 是否禁用了 `token` 和 `user` 字段的存储。
 
 ---
 ? 2026 Frontend Team. Python Tutor System.
