@@ -39,7 +39,7 @@
 ## 📦 环境要求
 
 - Python 3.10+
-- Node.js 18+ & npm
+- Node.js 20+ & npm
 - Docker & Docker Compose
 - MySQL 8（使用 Docker 可免手动安装）
 - Redis 7（使用 Docker 可免手动安装）

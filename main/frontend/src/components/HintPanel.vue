@@ -65,78 +65,11 @@ const hintHtml = computed(() => {
 });
 
 const randomIcon = computed(() => {
-  const emojis = ['?', '?', '?', '?', '?'];
+  const emojis = ['🎉', '🥳', '✨', '⭐', '👍'];
   return emojis[Math.floor(Math.random() * emojis.length)];
 });
 </script>
 
 <style scoped>
 /* Remove existing styles as we use Tailwind now */
-</style>
-  color: var(--color-accent-orange);
-  border: 1px solid var(--color-accent-orange);
-}
-
-.empty-state, .success-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--color-text-secondary);
-  padding: var(--space-8);
-}
-
-.success-icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-4);
-}
-
-.success-msg {
-  color: var(--color-success);
-  font-weight: 500;
-}
-
-.section-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
-}
-
-.hint-text {
-  font-family: var(--font-body);
-  line-height: 1.6;
-}
-
-.hint-text :deep(li) {
-  margin-bottom: var(--space-2);
-  list-style: none;
-  position: relative;
-  padding-left: var(--space-4);
-}
-
-.hint-text :deep(li)::before {
-  content: "?";
-  position: absolute;
-  left: 0;
-  color: var(--color-accent-orange);
-}
-
-.error-details {
-  margin-top: var(--space-4);
-}
-
-.error-log {
-  background: #f8f9fa;
-  padding: var(--space-2);
-  border-radius: var(--radius-md);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  overflow-x: auto;
-  color: var(--color-error);
-  border: 1px dashed var(--color-border-subtle);
-}
 </style>

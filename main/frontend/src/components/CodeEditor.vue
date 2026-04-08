@@ -1,12 +1,6 @@
 <template>
-  <div class="code-editor-container" :class="{ 'has-errors': hasErrors }">
-    <div class="editor-header">
-      <div class="header-left">
-        <span class="editor-title">Python ?</span>
-        <div class="status-indicator" :class="statusClass"></div>
-      </div>
-    </div>
-    <div class="editor-body" ref="editorRef"></div>
+  <div class="flex flex-col h-full bg-[#282c34] overflow-hidden" :class="{ 'ring-2 ring-red-500/30': hasErrors }">
+    <div class="flex-1 overflow-hidden" ref="editorRef"></div>
   </div>
 </template>
 
@@ -31,7 +25,6 @@ const editorRef = ref(null);
 let view = null;
 
 const hasErrors = ref(false);
-const statusClass = ref('idle');
 
 onMounted(() => {
   const startState = EditorState.create({
@@ -56,6 +49,11 @@ onMounted(() => {
           severity: "error",
           message: err.message
         }));
+      }),
+      EditorView.theme({
+        "&": { height: "100%" },
+        ".cm-scroller": { overflow: "auto" },
+        ".cm-content, .cm-gutter": { minHeight: "100%" }
       })
     ]
   });
@@ -90,61 +88,14 @@ watch(() => props.modelValue, (newVal) => {
 
 watch(() => props.errors, (newErrors) => {
   hasErrors.value = newErrors.length > 0;
-  statusClass.value = newErrors.length > 0 ? 'error' : 'success';
 }, { deep: true });
 </script>
 
-<style scoped>
-.code-editor-container {
-  display: flex;
-  flex-direction: column;
+<style>
+.cm-editor {
   height: 100%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border-subtle);
-  background: #282c34; /* Dark background for editor area */
 }
-
-.editor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-bg-raised);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.editor-title {
-  font-family: var(--font-heading);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-}
-
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-text-secondary);
-}
-
-.status-indicator.idle { background: var(--color-text-secondary); }
-.status-indicator.success { background: var(--color-success); }
-.status-indicator.error { background: var(--color-error); }
-
-.editor-body {
-  flex: 1;
-  overflow: auto;
-}
-
-:deep(.cm-editor) {
-  height: 100%;
-  font-family: var(--font-mono);
+.cm-editor.cm-focused {
+  outline: none;
 }
 </style>
